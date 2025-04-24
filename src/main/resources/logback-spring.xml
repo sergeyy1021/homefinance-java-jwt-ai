@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOG_PATH" value="logs" />
+    <property name="LOG_FILE" value="${LOG_PATH}/homefinance.log" />
+
+    <!-- Консоль -->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Файл с ежедневной ротацией -->
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/homefinance-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Уровень по умолчанию -->
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="RollingFile"/>
+    </root>
+
+    <!-- Твой пакет на DEBUG -->
+    <logger name="com.sergey1021.homefinance.service" level="DEBUG" additivity="false">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="RollingFile"/>
+    </logger>
+
+</configuration>
+
